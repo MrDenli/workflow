@@ -3,7 +3,7 @@ name: CI/CD Pipeline for Parcel Service
 on:
   push:
     branches:
-      - main
+      - first-iteration
     tags:
       - '*'
 
@@ -22,6 +22,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd ${{ github.workspace }}
+          ls -la  # Проверка наличия файлов
           go mod download
 
       - name: Lint code
