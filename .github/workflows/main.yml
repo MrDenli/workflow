@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3  # Обновлено с v2 на v3
+        uses: actions/checkout@v3
 
       - name: Set up Go
         uses: actions/setup-go@v3
@@ -21,7 +21,9 @@ jobs:
           go-version: '1.19'
 
       - name: Install dependencies
-        run: go mod download
+        run: |
+          cd ${{ github.workspace }}
+          go mod download
 
       - name: Lint code
         run: |
@@ -31,11 +33,9 @@ jobs:
       - name: Run tests
         run: go test ./...
 
-      # Новый шаг для вывода логов в случае ошибки тестов
       - name: Show logs if tests fail
         if: failure()
-        run: |
-          echo "Linting or tests failed. Check logs above for details."
+        run: echo "Linting or tests failed. Check logs above for details."
 
   docker_build_and_push:
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3  # Обновлено с v2 на v3
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
