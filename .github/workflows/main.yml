@@ -22,7 +22,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd ${{ github.workspace }}
           go mod download
 
       - name: Lint code
